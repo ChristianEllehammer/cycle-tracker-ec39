@@ -32,10 +32,10 @@ export function NotificationCenter({ notifications }: NotificationCenterProps) {
 
   const formatNotificationType = (type: string) => {
     switch (type) {
-      case 'period_start': return 'Period Start';
-      case 'ovulation': return 'Ovulation';
-      case 'pms': return 'PMS Alert';
-      case 'fertile_window': return 'Fertile Window';
+      case 'period_start': return 'Menstruationsstart';
+      case 'ovulation': return 'Ægløsning';
+      case 'pms': return 'PMS alarm';
+      case 'fertile_window': return 'Frugtbar periode';
       default: return type;
     }
   };
@@ -45,19 +45,19 @@ export function NotificationCenter({ notifications }: NotificationCenterProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Bell className="h-5 w-5" />
-          Upcoming Notifications
+          Kommende påmindelser
         </CardTitle>
         <CardDescription>
-          Stay informed about your cycle phases and important dates
+          Hold dig informeret om dine cyklusfaser og vigtige datoer
         </CardDescription>
       </CardHeader>
       <CardContent>
         {notifications.length === 0 ? (
           <div className="text-center py-8">
             <Bell className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500 mb-2">No upcoming notifications</p>
+            <p className="text-gray-500 mb-2">Ingen kommende påmindelser</p>
             <p className="text-sm text-gray-400">
-              Notifications will appear here based on your cycle tracking and preferences
+              Påmindelser vil vises her baseret på din cyklussporing og præferencer
             </p>
           </div>
         ) : (
@@ -80,10 +80,10 @@ export function NotificationCenter({ notifications }: NotificationCenterProps) {
                   <p className="text-gray-600 text-sm">{notification.message}</p>
                   <div className="flex items-center gap-2 text-xs text-gray-500">
                     <Calendar className="h-3 w-3" />
-                    <span>Scheduled for: {notification.scheduled_date.toLocaleDateString()}</span>
+                    <span>Planlagt til: {notification.scheduled_date.toLocaleDateString()}</span>
                     {notification.is_sent && (
                       <Badge variant="outline" className="ml-2">
-                        Sent
+                        Sendt
                       </Badge>
                     )}
                   </div>
@@ -94,23 +94,23 @@ export function NotificationCenter({ notifications }: NotificationCenterProps) {
         )}
 
         <div className="mt-6 p-4 bg-gradient-to-r from-pink-50 to-purple-50 rounded-lg border">
-          <h4 className="font-medium text-gray-900 mb-2">🔔 Notification Types</h4>
+          <h4 className="font-medium text-gray-900 mb-2">🔔 Påmindelsestyper</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
             <div className="flex items-center gap-2">
               <Heart className="h-4 w-4 text-red-500" />
-              <span><strong>Period Start:</strong> Reminds you when your period is expected</span>
+              <span><strong>Menstruationsstart:</strong> Påminder dig når din menstruation forventes</span>
             </div>
             <div className="flex items-center gap-2">
               <Zap className="h-4 w-4 text-purple-500" />
-              <span><strong>Ovulation:</strong> Alerts you during your fertile window</span>
+              <span><strong>Ægløsning:</strong> Giver besked under din frugtbare periode</span>
             </div>
             <div className="flex items-center gap-2">
               <Calendar className="h-4 w-4 text-orange-500" />
-              <span><strong>PMS Alert:</strong> Prepares you for potential symptoms</span>
+              <span><strong>PMS alarm:</strong> Forbereder dig på potentielle symptomer</span>
             </div>
             <div className="flex items-center gap-2">
               <Zap className="h-4 w-4 text-green-500" />
-              <span><strong>Fertile Window:</strong> Tracks your most fertile days</span>
+              <span><strong>Frugtbar periode:</strong> Sporer dine mest frugtbare dage</span>
             </div>
           </div>
         </div>

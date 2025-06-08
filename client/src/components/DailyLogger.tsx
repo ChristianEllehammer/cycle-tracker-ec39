@@ -20,33 +20,33 @@ interface DailyLoggerProps {
 }
 
 const MOOD_OPTIONS = [
-  { value: 'great', label: 'Great 😄', color: 'bg-green-100 text-green-800' },
-  { value: 'good', label: 'Good 😊', color: 'bg-blue-100 text-blue-800' },
+  { value: 'great', label: 'Fantastisk 😄', color: 'bg-green-100 text-green-800' },
+  { value: 'good', label: 'God 😊', color: 'bg-blue-100 text-blue-800' },
   { value: 'okay', label: 'Okay 😐', color: 'bg-yellow-100 text-yellow-800' },
-  { value: 'bad', label: 'Bad 😞', color: 'bg-orange-100 text-orange-800' },
-  { value: 'terrible', label: 'Terrible 😢', color: 'bg-red-100 text-red-800' },
+  { value: 'bad', label: 'Dårlig 😞', color: 'bg-orange-100 text-orange-800' },
+  { value: 'terrible', label: 'Forfærdelig 😢', color: 'bg-red-100 text-red-800' },
 ] as const;
 
 const FLOW_OPTIONS = [
-  { value: 'none', label: 'None', color: 'bg-gray-100 text-gray-800' },
-  { value: 'light', label: 'Light 💧', color: 'bg-pink-100 text-pink-800' },
-  { value: 'medium', label: 'Medium 💧💧', color: 'bg-red-100 text-red-800' },
-  { value: 'heavy', label: 'Heavy 💧💧💧', color: 'bg-red-200 text-red-900' },
+  { value: 'none', label: 'Ingen', color: 'bg-gray-100 text-gray-800' },
+  { value: 'light', label: 'Let 💧', color: 'bg-pink-100 text-pink-800' },
+  { value: 'medium', label: 'Mellem 💧💧', color: 'bg-red-100 text-red-800' },
+  { value: 'heavy', label: 'Kraftig 💧💧💧', color: 'bg-red-200 text-red-900' },
 ] as const;
 
 const SYMPTOM_OPTIONS = [
-  'Cramps',
-  'Headache',
-  'Bloating',
-  'Breast tenderness',
-  'Fatigue',
-  'Mood swings',
-  'Acne',
-  'Nausea',
-  'Back pain',
-  'Food cravings',
-  'Insomnia',
-  'Hot flashes'
+  'Kramper',
+  'Hovedpine',
+  'Oppustethed',
+  'Brystømhed',
+  'Træthed',
+  'Humørsvingninger',
+  'Akne',
+  'Kvalme',
+  'Rygsmerter',
+  'Madtrang',
+  'Søvnløshed',
+  'Hedeture'
 ];
 
 export function DailyLogger({ userId, onUpdate }: DailyLoggerProps) {
@@ -97,17 +97,17 @@ export function DailyLogger({ userId, onUpdate }: DailyLoggerProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Plus className="h-5 w-5" />
-          Daily Log Entry
+          Daglig log indtastning
         </CardTitle>
         <CardDescription>
-          Track your daily symptoms, mood, and flow
+          Spor dine daglige symptomer, humør og blødning
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Date Selection */}
           <div className="space-y-2">
-            <Label>Date</Label>
+            <Label>Dato</Label>
             <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
               <PopoverTrigger asChild>
                 <Button
@@ -136,7 +136,7 @@ export function DailyLogger({ userId, onUpdate }: DailyLoggerProps) {
 
           {/* Flow Intensity */}
           <div className="space-y-2">
-            <Label>Flow Intensity</Label>
+            <Label>Blødningsintensitet</Label>
             <Select
               value={formData.flow_intensity || ''}
               onValueChange={(value: string) =>
@@ -147,7 +147,7 @@ export function DailyLogger({ userId, onUpdate }: DailyLoggerProps) {
               }
             >
               <SelectTrigger>
-                <SelectValue placeholder="Select flow intensity" />
+                <SelectValue placeholder="Vælg blødningsintensitet" />
               </SelectTrigger>
               <SelectContent>
                 {FLOW_OPTIONS.map((option) => (
@@ -166,7 +166,7 @@ export function DailyLogger({ userId, onUpdate }: DailyLoggerProps) {
 
           {/* Mood */}
           <div className="space-y-2">
-            <Label>Mood</Label>
+            <Label>Humør</Label>
             <Select
               value={formData.mood || ''}
               onValueChange={(value: string) =>
@@ -177,7 +177,7 @@ export function DailyLogger({ userId, onUpdate }: DailyLoggerProps) {
               }
             >
               <SelectTrigger>
-                <SelectValue placeholder="How are you feeling?" />
+                <SelectValue placeholder="Hvordan har du det?" />
               </SelectTrigger>
               <SelectContent>
                 {MOOD_OPTIONS.map((option) => (
@@ -196,7 +196,7 @@ export function DailyLogger({ userId, onUpdate }: DailyLoggerProps) {
 
           {/* Symptoms */}
           <div className="space-y-3">
-            <Label>Symptoms</Label>
+            <Label>Symptomer</Label>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {SYMPTOM_OPTIONS.map((symptom) => (
                 <div key={symptom} className="flex items-center space-x-2">
@@ -226,10 +226,10 @@ export function DailyLogger({ userId, onUpdate }: DailyLoggerProps) {
 
           {/* Notes */}
           <div className="space-y-2">
-            <Label htmlFor="notes">Notes (Optional)</Label>
+            <Label htmlFor="notes">Noter (valgfri)</Label>
             <Textarea
               id="notes"
-              placeholder="Any additional notes about your day..."
+              placeholder="Yderligere noter om din dag..."
               value={formData.notes || ''}
               onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
                 setFormData((prev: CreateDailyTrackingInput) => ({
@@ -243,7 +243,7 @@ export function DailyLogger({ userId, onUpdate }: DailyLoggerProps) {
 
           <Button type="submit" disabled={isLoading} className="w-full">
             <Save className="mr-2 h-4 w-4" />
-            {isLoading ? 'Saving...' : 'Save Daily Entry'}
+            {isLoading ? 'Gemmer...' : 'Gem daglig indgang'}
           </Button>
         </form>
       </CardContent>

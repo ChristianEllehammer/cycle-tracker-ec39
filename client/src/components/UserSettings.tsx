@@ -55,17 +55,17 @@ export function UserSettings({ userId, userPreferences, onUpdate }: UserSettings
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Settings className="h-5 w-5" />
-          Cycle Preferences
+          Cyklus præferencer
         </CardTitle>
         <CardDescription>
-          Customize your cycle tracking and notification settings
+          Tilpas dine cyklussporing og påmindelsesindstillinger
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="cycle-length">Average Cycle Length (days)</Label>
+              <Label htmlFor="cycle-length">Gennemsnitlig cykluslængde (dage)</Label>
               <Input
                 id="cycle-length"
                 type="number"
@@ -80,11 +80,11 @@ export function UserSettings({ userId, userPreferences, onUpdate }: UserSettings
                 }
                 className="bg-white"
               />
-              <p className="text-xs text-gray-500">Typical range: 21-35 days</p>
+              <p className="text-xs text-gray-500">Typisk interval: 21-35 dage</p>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="period-length">Average Period Length (days)</Label>
+              <Label htmlFor="period-length">Gennemsnitlig menstruationslængde (dage)</Label>
               <Input
                 id="period-length"
                 type="number"
@@ -99,12 +99,12 @@ export function UserSettings({ userId, userPreferences, onUpdate }: UserSettings
                 }
                 className="bg-white"
               />
-              <p className="text-xs text-gray-500">Typical range: 3-10 days</p>
+              <p className="text-xs text-gray-500">Typisk interval: 3-10 dage</p>
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="reminder-days">Reminder Days Before Period</Label>
+            <Label htmlFor="reminder-days">Påmindelsesdage før menstruation</Label>
             <Input
               id="reminder-days"
               type="number"
@@ -119,14 +119,14 @@ export function UserSettings({ userId, userPreferences, onUpdate }: UserSettings
               }
               className="bg-white"
             />
-            <p className="text-xs text-gray-500">How many days before your period would you like to be reminded?</p>
+            <p className="text-xs text-gray-500">Hvor mange dage før din menstruation vil du gerne påmindes?</p>
           </div>
 
           <div className="flex items-center justify-between p-4 bg-pink-50 rounded-lg">
             <div className="space-y-1">
-              <Label htmlFor="notifications">Enable Notifications</Label>
+              <Label htmlFor="notifications">Aktiver påmindelser</Label>
               <p className="text-sm text-gray-600">
-                Receive reminders for period start, ovulation, and fertile windows
+                Modtag påmindelser om menstruationsstart, ægløsning og frugtbare perioder
               </p>
             </div>
             <Switch
@@ -142,16 +142,16 @@ export function UserSettings({ userId, userPreferences, onUpdate }: UserSettings
           </div>
 
           <div className="bg-blue-50 p-4 rounded-lg">
-            <h4 className="font-medium text-blue-900 mb-2">📊 Prediction Accuracy</h4>
+            <h4 className="font-medium text-blue-900 mb-2">📊 Forudsigelsesnøjagtighed</h4>
             <p className="text-sm text-blue-800">
-              The more cycles you track, the more accurate your predictions will become. 
-              We use your historical data to provide personalized insights and notifications.
+              Jo flere cyklusser du sporer, jo mere nøjagtige bliver dine forudsigelser. 
+              Vi bruger dine historiske data til at give personaliserede indsigter og påmindelser.
             </p>
           </div>
 
           <Button type="submit" disabled={isLoading} className="w-full">
             <Save className="mr-2 h-4 w-4" />
-            {isLoading ? 'Saving...' : 'Save Preferences'}
+            {isLoading ? 'Gemmer...' : 'Gem præferencer'}
           </Button>
         </form>
       </CardContent>

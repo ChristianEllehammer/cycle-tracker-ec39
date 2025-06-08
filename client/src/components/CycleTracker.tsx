@@ -87,22 +87,22 @@ export function CycleTracker({ userId, cycleEntries, onUpdate }: CycleTrackerPro
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Plus className="h-5 w-5" />
-            Track New Cycle
+            Spor ny cyklus
           </CardTitle>
           <CardDescription>
-            Record the start of your menstrual cycle
+            Registrer starten på din menstruationscyklus
           </CardDescription>
         </CardHeader>
         <CardContent>
           {!isCreating ? (
             <Button onClick={() => setIsCreating(true)} className="w-full">
               <Plus className="mr-2 h-4 w-4" />
-              Start New Cycle
+              Start ny cyklus
             </Button>
           ) : (
             <form onSubmit={handleCreateSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label>Start Date</Label>
+                <Label>Startdato</Label>
                 <Popover open={isStartCalendarOpen} onOpenChange={setIsStartCalendarOpen}>
                   <PopoverTrigger asChild>
                     <Button
@@ -130,7 +130,7 @@ export function CycleTracker({ userId, cycleEntries, onUpdate }: CycleTrackerPro
               </div>
 
               <div className="space-y-2">
-                <Label>End Date (Optional)</Label>
+                <Label>Slutdato (valgfri)</Label>
                 <Popover open={isEndCalendarOpen} onOpenChange={setIsEndCalendarOpen}>
                   <PopoverTrigger asChild>
                     <Button
@@ -138,7 +138,7 @@ export function CycleTracker({ userId, cycleEntries, onUpdate }: CycleTrackerPro
                       className="w-full justify-start text-left font-normal"
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {createFormData.end_date ? format(createFormData.end_date, 'PPP') : 'Select end date'}
+                      {createFormData.end_date ? format(createFormData.end_date, 'PPP') : 'Vælg slutdato'}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
@@ -156,10 +156,10 @@ export function CycleTracker({ userId, cycleEntries, onUpdate }: CycleTrackerPro
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="create-notes">Notes (Optional)</Label>
+                <Label htmlFor="create-notes">Noter (valgfri)</Label>
                 <Textarea
                   id="create-notes"
-                  placeholder="Any notes about this cycle..."
+                  placeholder="Noter om denne cyklus..."
                   value={createFormData.notes || ''}
                   onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
                     setCreateFormData((prev: CreateCycleEntryInput) => ({
@@ -173,7 +173,7 @@ export function CycleTracker({ userId, cycleEntries, onUpdate }: CycleTrackerPro
 
               <div className="flex gap-2">
                 <Button type="submit" disabled={isLoading} className="flex-1">
-                  {isLoading ? 'Creating...' : 'Create Cycle'}
+                  {isLoading ? 'Opretter...' : 'Opret cyklus'}
                 </Button>
                 <Button 
                   type="button" 
@@ -181,7 +181,7 @@ export function CycleTracker({ userId, cycleEntries, onUpdate }: CycleTrackerPro
                   onClick={() => setIsCreating(false)}
                   className="flex-1"
                 >
-                  Cancel
+                  Annuller
                 </Button>
               </div>
             </form>
@@ -192,15 +192,15 @@ export function CycleTracker({ userId, cycleEntries, onUpdate }: CycleTrackerPro
       {/* Cycle History */}
       <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
         <CardHeader>
-          <CardTitle>Cycle History</CardTitle>
+          <CardTitle>Cyklushistorik</CardTitle>
           <CardDescription>
-            View and edit your tracked cycles
+            Se og rediger dine sporede cyklusser
           </CardDescription>
         </CardHeader>
         <CardContent>
           {cycleEntries.length === 0 ? (
             <p className="text-gray-500 text-center py-8">
-              No cycles tracked yet. Start by adding your first cycle above! 🌸
+              Ingen cyklusser sporet endnu. Start med at tilføje din første cyklus ovenfor! 🌸
             </p>
           ) : (
             <div className="space-y-4">
@@ -209,7 +209,7 @@ export function CycleTracker({ userId, cycleEntries, onUpdate }: CycleTrackerPro
                   {editingId === entry.id ? (
                     <form onSubmit={handleUpdateSubmit} className="space-y-4">
                       <div className="space-y-2">
-                        <Label>End Date</Label>
+                        <Label>Slutdato</Label>
                         <Popover>
                           <PopoverTrigger asChild>
                             <Button
@@ -217,7 +217,7 @@ export function CycleTracker({ userId, cycleEntries, onUpdate }: CycleTrackerPro
                               className="w-full justify-start text-left font-normal"
                             >
                               <CalendarIcon className="mr-2 h-4 w-4" />
-                              {updateFormData.end_date ? format(updateFormData.end_date, 'PPP') : 'Select end date'}
+                              {updateFormData.end_date ? format(updateFormData.end_date, 'PPP') : 'Vælg slutdato'}
                             </Button>
                           </PopoverTrigger>
                           <PopoverContent className="w-auto p-0" align="start">
@@ -234,7 +234,7 @@ export function CycleTracker({ userId, cycleEntries, onUpdate }: CycleTrackerPro
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="update-notes">Notes</Label>
+                        <Label htmlFor="update-notes">Noter</Label>
                         <Textarea
                           id="update-notes"
                           value={updateFormData.notes || ''}
@@ -250,7 +250,7 @@ export function CycleTracker({ userId, cycleEntries, onUpdate }: CycleTrackerPro
 
                       <div className="flex gap-2">
                         <Button type="submit" disabled={isLoading} size="sm">
-                          {isLoading ? 'Saving...' : 'Save'}
+                          {isLoading ? 'Gemmer...' : 'Gem'}
                         </Button>
                         <Button 
                           type="button" 
@@ -258,7 +258,7 @@ export function CycleTracker({ userId, cycleEntries, onUpdate }: CycleTrackerPro
                           size="sm"
                           onClick={() => setEditingId(null)}
                         >
-                          Cancel
+                          Annuller
                         </Button>
                       </div>
                     </form>
@@ -267,16 +267,16 @@ export function CycleTracker({ userId, cycleEntries, onUpdate }: CycleTrackerPro
                       <div className="space-y-2">
                         <div className="flex items-center gap-4">
                           <p className="font-medium">
-                            {entry.start_date.toLocaleDateString()} - {entry.end_date?.toLocaleDateString() || 'Ongoing'}
+                            {entry.start_date.toLocaleDateString()} - {entry.end_date?.toLocaleDateString() || 'Igangværende'}
                           </p>
                           {entry.cycle_length && (
                             <span className="text-sm bg-purple-100 text-purple-800 px-2 py-1 rounded">
-                              {entry.cycle_length} day cycle
+                              {entry.cycle_length} dages cyklus
                             </span>
                           )}
                           {entry.period_length && (
                             <span className="text-sm bg-pink-100 text-pink-800 px-2 py-1 rounded">
-                              {entry.period_length} day period
+                              {entry.period_length} dages menstruation
                             </span>
                           )}
                         </div>
@@ -284,7 +284,7 @@ export function CycleTracker({ userId, cycleEntries, onUpdate }: CycleTrackerPro
                           <p className="text-sm text-gray-600">{entry.notes}</p>
                         )}
                         <p className="text-xs text-gray-400">
-                          Created: {entry.created_at.toLocaleDateString()}
+                          Oprettet: {entry.created_at.toLocaleDateString()}
                         </p>
                       </div>
                       <Button
