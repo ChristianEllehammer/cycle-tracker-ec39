@@ -9,6 +9,7 @@ import superjson from 'superjson';
 import {
   createCycleEntryInputSchema,
   updateCycleEntryInputSchema,
+  deleteCycleEntryInputSchema,
   createDailyTrackingInputSchema,
   updateUserPreferencesInputSchema,
   getUserDataInputSchema,
@@ -18,6 +19,7 @@ import {
 // Import handlers
 import { createCycleEntry } from './handlers/create_cycle_entry';
 import { updateCycleEntry } from './handlers/update_cycle_entry';
+import { deleteCycleEntry } from './handlers/delete_cycle_entry';
 import { getCycleEntries } from './handlers/get_cycle_entries';
 import { createDailyTracking } from './handlers/create_daily_tracking';
 import { getDailyTracking } from './handlers/get_daily_tracking';
@@ -47,6 +49,10 @@ const appRouter = router({
   updateCycleEntry: publicProcedure
     .input(updateCycleEntryInputSchema)
     .mutation(({ input }) => updateCycleEntry(input)),
+
+  deleteCycleEntry: publicProcedure
+    .input(deleteCycleEntryInputSchema)
+    .mutation(({ input }) => deleteCycleEntry(input)),
 
   getCycleEntries: publicProcedure
     .input(getUserDataInputSchema)

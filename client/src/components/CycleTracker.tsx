@@ -1,11 +1,11 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { CalendarIcon, Plus, Edit3 } from 'lucide-react';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import { CalendarIcon, Plus, Edit3, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { trpc } from '@/utils/trpc';
 import { format } from 'date-fns';
@@ -78,6 +78,18 @@ export function CycleTracker({ userId, cycleEntries, onUpdate }: CycleTrackerPro
       end_date: entry.end_date || undefined,
       notes: entry.notes
     });
+  };
+
+  const handleDelete = async (entryId: number) => {
+    setIsLoading(true);
+    try {
+      await trpc.deleteCycleEntry.mutate({ id: entryId });
+      onUpdate();
+    } catch (error) {
+      console.error('Failed to delete cycle entry:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -287,14 +299,44 @@ export function CycleTracker({ userId, cycleEntries, onUpdate }: CycleTrackerPro
                           Oprettet: {entry.created_at.toLocaleDateString()}
                         </p>
                       </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => startEdit(entry)}
-                        className="shrink-0"
-                      >
-                        <Edit3 className="h-4 w-4" />
-                      </Button>
+                      <div className="flex gap-2 shrink-0">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => startEdit(entry)}
+                        >
+                          <Edit3 className="h-4 w-4" />
+                        </Button>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>Slet cyklusindtastning</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                Er du sikker på, at du vil slette denne cyklusindtastning? Denne handling kan ikke fortrydes.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Annuller</AlertDialogCancel>
+                              <AlertDialogAction
+                                onClick={() => handleDelete(entry.id)}
+                                className="bg-red-600 hover:bg-red-700"
+                                disabled={isLoading}
+                              >
+                                {isLoading ? 'Sletter...' : 'Slet'}
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
                     </div>
                   )}
                 </div>

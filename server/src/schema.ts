@@ -114,6 +114,12 @@ export const getCurrentPhaseInputSchema = z.object({
 
 export type GetCurrentPhaseInput = z.infer<typeof getCurrentPhaseInputSchema>;
 
+export const deleteCycleEntryInputSchema = z.object({
+  id: z.number()
+});
+
+export type DeleteCycleEntryInput = z.infer<typeof deleteCycleEntryInputSchema>;
+
 export const cyclePhaseInfoSchema = z.object({
   phase: cyclePhaseSchema,
   day_in_cycle: z.number().int(),
