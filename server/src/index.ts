@@ -13,7 +13,8 @@ import {
   createDailyTrackingInputSchema,
   updateUserPreferencesInputSchema,
   getUserDataInputSchema,
-  getCurrentPhaseInputSchema
+  getCurrentPhaseInputSchema,
+  generateIcsCalendarInputSchema
 } from './schema';
 
 // Import handlers
@@ -28,6 +29,7 @@ import { getUserPreferences } from './handlers/get_user_preferences';
 import { getCurrentPhase } from './handlers/get_current_phase';
 import { getUpcomingNotifications } from './handlers/get_upcoming_notifications';
 import { generateCyclePredictions } from './handlers/generate_cycle_predictions';
+import { generateIcsCalendar } from './handlers/generate_ics_calendar';
 
 const t = initTRPC.create({
   transformer: superjson,
@@ -89,6 +91,11 @@ const appRouter = router({
   getUpcomingNotifications: publicProcedure
     .input(getUserDataInputSchema)
     .query(({ input }) => getUpcomingNotifications(input)),
+
+  // Calendar export
+  generateIcsCalendar: publicProcedure
+    .input(generateIcsCalendarInputSchema)
+    .query(({ input }) => generateIcsCalendar(input)),
 });
 
 export type AppRouter = typeof appRouter;

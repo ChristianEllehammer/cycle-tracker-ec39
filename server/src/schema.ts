@@ -120,6 +120,10 @@ export const deleteCycleEntryInputSchema = z.object({
 
 export type DeleteCycleEntryInput = z.infer<typeof deleteCycleEntryInputSchema>;
 
+export const generateIcsCalendarInputSchema = getUserDataInputSchema;
+
+export type GenerateIcsCalendarInput = z.infer<typeof generateIcsCalendarInputSchema>;
+
 export const cyclePhaseInfoSchema = z.object({
   phase: cyclePhaseSchema,
   day_in_cycle: z.number().int(),

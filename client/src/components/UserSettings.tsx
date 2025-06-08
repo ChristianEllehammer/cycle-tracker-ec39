@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { Settings, Save } from 'lucide-react';
+import { Settings, Save, Download } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { trpc } from '@/utils/trpc';
 import type { UpdateUserPreferencesInput, UserPreferences } from '../../../server/src/schema';
@@ -24,6 +24,7 @@ export function UserSettings({ userId, userPreferences, onUpdate }: UserSettings
     notification_enabled: true
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
 
   useEffect(() => {
     if (userPreferences) {
@@ -47,6 +48,28 @@ export function UserSettings({ userId, userPreferences, onUpdate }: UserSettings
       console.error('Failed to update preferences:', error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleExportCalendar = async () => {
+    setIsExporting(true);
+    try {
+      const icsContent = await trpc.generateIcsCalendar.query({ user_id: userId });
+      
+      // Create and download the .ics file
+      const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'cycle_calendar.ics');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Failed to export calendar:', error);
+    } finally {
+      setIsExporting(false);
     }
   };
 
@@ -149,11 +172,33 @@ export function UserSettings({ userId, userPreferences, onUpdate }: UserSettings
             </p>
           </div>
 
-          <Button type="submit" disabled={isLoading} className="w-full">
-            <Save className="mr-2 h-4 w-4" />
-            {isLoading ? 'Gemmer...' : 'Gem præferencer'}
-          </Button>
+          <div className="flex gap-3">
+            <Button type="submit" disabled={isLoading} className="flex-1">
+              <Save className="mr-2 h-4 w-4" />
+              {isLoading ? 'Gemmer...' : 'Gem præferencer'}
+            </Button>
+            <Button 
+              type="button" 
+              variant="outline" 
+              onClick={handleExportCalendar} 
+              disabled={isExporting}
+              className="flex-1"
+            >
+              <Download className="mr-2 h-4 w-4" />
+              {isExporting ? 'Eksporterer...' : 'Eksporter Kalender'}
+            </Button>
+          </div>
         </form>
+
+        <div className="mt-6 p-4 bg-green-50 rounded-lg border border-green-200">
+          <h4 className="font-medium text-green-900 mb-2">📅 Kalender eksport</h4>
+          <p className="text-sm text-green-800 mb-3">
+            Eksporter dine cyklusforudsigelser som en .ics fil, som kan importeres i de fleste kalender-apps (Google Calendar, Apple Calendar, Outlook osv.).
+          </p>
+          <p className="text-xs text-green-700">
+            Kalenderfilen indeholder forudsigelser for menstruationsstart, ægløsning og frugtbare perioder baseret på dine sporede cyklusser.
+          </p>
+        </div>
       </CardContent>
     </Card>
   );
